@@ -17,8 +17,11 @@ const FundCardBuy = ({
     <div
       className="sm:w-[288px] w-full rounded-[15px] bg-[#fefefe] cursor-pointer"
       onClick={handleClick}
+      style={{ width: "100%", height: "40vh" }}
     >
+       <div style={{ display: "flex" }}>
       <img
+      style={{ height: "40vh" }}
         src={image}
         alt="fund"
         className="w-full h-[158px] object-cover rounded-[15px]"
@@ -75,6 +78,7 @@ const FundCardBuy = ({
           <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">
             by <span className="text-[#b2b3bd]">{owner}</span>
           </p>
+        </div>
         </div>
       </div>
     </div>

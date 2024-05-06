@@ -65,13 +65,7 @@ const CreateProduct = () => {
         className="w-full mt-[65px] flex flex-col gap-[30px]"
       >
         <div className="flex flex-wrap gap-[40px]">
-          <FormField
-            labelName="Your Name *"
-            placeholder="John Doe"
-            inputType="text"
-            value={form.name}
-            handleChange={(e) => handleFormFieldChange("name", e)}
-          />
+          
           <FormField
             labelName="Product Title *"
             placeholder="Write a title"

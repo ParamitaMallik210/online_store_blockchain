@@ -30,7 +30,7 @@ const UserInput = () => {
       setIsLoading(true);
       // await createAsset({ ...form, priceperunit: ethers.utils.parseUnits(form.priceperunit, 18)})
       setIsLoading(false);
-      navigate("/create-asset", {
+      navigate("/create-product", {
         state: { address: form.address }, // Pass address as state to the next route
       });
     } else {
