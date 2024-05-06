@@ -1,4 +1,4 @@
-import createAsset from './create-campaign.svg';
+import createProduct from './create-campaign.svg';
 import dashboard from './dashboard.svg';
 import logo from './logo.svg';
 import logout from './logout.svg';
@@ -15,7 +15,7 @@ import thirdweb from './thirdweb.png';
 
 export {
   tagType,
-  createAsset,
+  createProduct,
   dashboard,
   logo,
   logout,

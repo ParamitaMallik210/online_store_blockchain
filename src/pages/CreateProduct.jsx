@@ -6,10 +6,10 @@ import { useStateContext } from '../context';
 import { CustomButton, FormField, Loader } from '../components';
 import { checkIfImage } from '../utils';
 
-const CreateAsset = () => {
+const CreateProduct = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { createAsset } = useStateContext();
+  const { createProduct } = useStateContext();
   const [form, setForm] = useState({
     name: '',
     title: '',
@@ -35,7 +35,7 @@ const CreateAsset = () => {
     checkIfImage(form.image, async (exists) => {
       if (exists) {
         setIsLoading(true);
-        await createAsset({ ...form, priceperunit: ethers.utils.parseUnits(form.priceperunit, 18) });
+        await createProduct({ ...form, priceperunit: ethers.utils.parseUnits(form.priceperunit, 18) });
         setIsLoading(false);
         navigate('/');
       } else {
@@ -49,20 +49,14 @@ const CreateAsset = () => {
     <div className="bg-[#1c1c24] flex justify-center items-center flex-col rounded-[10px] sm:p-10 p-4">
       {isLoading && <Loader />}
       <div className="flex justify-center items-center p-[16px] sm:min-w-[380px] bg-[#3a3a43] rounded-[10px]">
-        <h1 className="font-epilogue font-bold sm:text-[25px] text-[18px] leading-[38px] text-white">Asset Details</h1>
+        <h1 className="font-epilogue font-bold sm:text-[25px] text-[18px] leading-[38px] text-white">Product Details</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="w-full mt-[65px] flex flex-col gap-[30px]">
         <div className="flex flex-wrap gap-[40px]">
+          
           <FormField 
-            labelName="Your Name *"
-            placeholder="John Doe"
-            inputType="text"
-            value={form.name}
-            handleChange={(e) => handleFormFieldChange('name', e)}
-          />
-          <FormField 
-            labelName="Asset Title *"
+            labelName="Product Title *"
             placeholder="Write a title"
             inputType="text"
             value={form.title}
@@ -97,8 +91,8 @@ const CreateAsset = () => {
         </div>
 
         <FormField 
-          labelName="Asset image *"
-          placeholder="Place image URL of your asset"
+          labelName="Product image *"
+          placeholder="Place image URL of your product"
           inputType="url"
           value={form.image}
           handleChange={(e) => handleFormFieldChange('image', e)}
@@ -107,7 +101,7 @@ const CreateAsset = () => {
         <div className="flex justify-center items-center mt-[40px]">
           <CustomButton 
             btnType="submit"
-            title="Submit new asset"
+            title="Submit new product"
             styles="bg-[#1dc071]"
           />
         </div>
@@ -116,4 +110,4 @@ const CreateAsset = () => {
   );
 };
 
-export default CreateAsset;
+export default CreateProduct;

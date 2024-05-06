@@ -1,49 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { DisplayAssets } from '../components';
+import { DisplayProducts } from '../components';
 import { useStateContext } from '../context';
 
 const UserDetails = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [assets, setAssets] = useState([]);
-    const [asset2, setAsset2] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [product2, setProduct2] = useState([]);
 
     const location = useLocation();
-    const { address, contract, getUserAssets, getAdminAssetsSell, getAdminAssetsBuy } = useStateContext();
+    const { address, contract, getUserProducts, getAdminProductsSell, getAdminProductsBuy } = useStateContext();
 
-    const fetchAssets = async () => {
+    const fetchProducts = async () => {
         setIsLoading(true);
-        const data = await getAdminAssetsSell(location.state.address); 
-        setAssets(data);
+        const data = await getAdminProductsSell(location.state.address); 
+        setProducts(data);
         setIsLoading(false);
     };
 
-    const fetchAssets2 = async () => {
+    const fetchProducts2 = async () => {
         setIsLoading(true);
-        const data = await getAdminAssetsBuy(location.state.address); // Use address from location state
-        setAsset2(data);
+        const data = await getAdminProductsBuy(location.state.address); // Use address from location state
+        setProduct2(data);
         setIsLoading(false);
     };
 
     useEffect(() => {
         if (contract && address) {
-            fetchAssets();
-            fetchAssets2();
+            fetchProducts();
+            fetchProducts2();
         } // Check if contract and address are available
     }, [address, contract]);
 
     return (
         <>
-            <DisplayAssets
-                title="Assets Sold By The User"
+            <DisplayProducts
+                title="Products Sold By The User"
                 isLoading={isLoading}
-                assets={assets}
+                products={products}
             />
-            <DisplayAssets
-                title="Assets Bought By The User"
+            <DisplayProducts
+                title="Products Bought By The User"
                 isLoading={isLoading}
-                assets={asset2}
+                products={product2}
             />
         </>
 

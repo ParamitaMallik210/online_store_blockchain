@@ -2,38 +2,38 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from "uuid";
 import FundCard from './FundCard';
-import { loader } from '../assets';
+import { loader } from '../products';
 
-const   DisplayAssets = ({ title, isLoading, assets }) => {
+const   DisplayProducts = ({ title, isLoading, products }) => {
   const navigate = useNavigate();
 
-  const handleNavigate = (asset) => {
-    navigate(`/asset-details/${asset.title}`, { state: asset })
+  const handleNavigate = (product) => {
+    navigate(`/product-details/${product.title}`, { state: product })
   }
   
   return (
     <div>
-      <h1 className="font-epilogue font-semibold text-[18px] text-white text-left">{title} ({assets.length})</h1>
+      <h1 className="font-epilogue font-semibold text-[18px] text-white text-left">{title} ({products.length})</h1>
 
       <div className="flex flex-wrap mt-[20px] gap-[26px]">
         {isLoading && (
           <img src={loader} alt="loader" className="w-[100px] h-[100px] object-contain" />
         )}
 
-        {!isLoading && assets.length === 0 && (
+        {!isLoading && products.length === 0 && (
           <p className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183]">
             There is no products available
           </p>
         )}
 
-        {!isLoading && assets.length > 0 && assets.map((asset) => <FundCard 
+        {!isLoading && products.length > 0 && products.map((product) => <FundCard 
           key={uuidv4()}
-          {...asset}
-          handleClick={() => handleNavigate(asset)}
+          {...product}
+          handleClick={() => handleNavigate(product)}
         />)}
       </div>
     </div>
   )
 }
 
-export default DisplayAssets
+export default DisplayProducts

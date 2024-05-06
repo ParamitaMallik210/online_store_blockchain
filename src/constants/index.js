@@ -1,4 +1,4 @@
-import { createAsset, dashboard, logout, payment, profile, withdraw } from '../assets';
+import { createProduct, dashboard, logout, payment, profile, withdraw } from '../products';
 
 export const navlinks = [
   {
@@ -9,7 +9,7 @@ export const navlinks = [
   {
     name: 'Ordered',
     imgUrl: withdraw,
-    link: '/bought-asset',
+    link: '/bought-product',
   },
  
   {

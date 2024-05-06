@@ -9,14 +9,14 @@ const StateContext = createContext();
 export const StateContextProvider = ({ children }) => {
   // const { contract } = useContract('0x5Bb014D2571c3e1799D49fb562e5Bbf7C3F4B20A');
   const { contract } = useContract('0x8FDFee1044BA34D784888784728955c3be1f4A6e');
-  const { mutateAsync: createAsset } = useContractWrite(contract, 'createAsset');
+  const { mutateAsync: createProduct } = useContractWrite(contract, 'createAsset');
 
   const address = useAddress();
   const connect = useMetamask();
 
-  const publishAsset = async (form) => {
+  const publishProduct = async (form) => {
     try {
-      const data = await createAsset({
+      const data = await createProduct({
 				args: [
 					address, // owner
 					form.title, // title
@@ -33,45 +33,45 @@ export const StateContextProvider = ({ children }) => {
     }
   }
 
-  const getAssets = async () => {
-    const assets = await contract.call('getAssets');
-    const parsedAssets = assets.map((asset, i) => (
+  const getProducts = async () => {
+    const products = await contract.call('getAssets');
+    const parsedProducts = products.map((product, i) => (
       {
-      owner: asset.owner,
-      title: asset.title,
-      description: asset.description,
-      priceperunit: asset.price ? ethers.utils.formatEther(asset.price.toString()) : '',
-      quantity: asset.quantity ? asset.quantity.toString() : '',
-      available: asset.available.toString(),
-      image: asset.image,
-      buyer: asset.buyer,
-      boughtunits: asset.boughtunits,
+      owner: product.owner,
+      title: product.title,
+      description: product.description,
+      priceperunit: product.price ? ethers.utils.formatEther(product.price.toString()) : '',
+      quantity: product.quantity ? product.quantity.toString() : '',
+      available: product.available.toString(),
+      image: product.image,
+      buyer: product.buyer,
+      boughtunits: product.boughtunits,
       pId: i
     }));
 
-    return parsedAssets;
+    return parsedProducts;
   }
 
-  const getUserAssets = async () => {
-    const allAssets = await getAssets();
+  const getUserProducts = async () => {
+    const allProducts = await getProducts();
 
-    const filteredAssets = allAssets.filter((asset) => asset.owner === address);
+    const filteredProducts = allProducts.filter((product) => product.owner === address);
 
-    return filteredAssets;
+    return filteredProducts;
   }
 
-  const getAdminAssetsSell = async (key) => {
-    const allAssets = await getAssets();
+  const getAdminProductsSell = async (key) => {
+    const allProducts = await getProducts();
   
-    const filteredAssets = allAssets.filter((asset) => asset.owner === key);
+    const filteredProducts = allProducts.filter((product) => product.owner === key);
   
-    return filteredAssets;
+    return filteredProducts;
   }
 
   
   
 
-  const toBuyAsset = async (pId, amount) => {
+  const toBuyProduct = async (pId, amount) => {
     const data = await contract.call('toBuyAsset', [pId], { value:parseInt(amount, 10)});
     return data;
   }
@@ -91,13 +91,13 @@ export const StateContextProvider = ({ children }) => {
     return parsedBuyer;
   }
 
-  const getBuyerAssets = async () => {
-    const allAssets = await getAssets();
+  const getBuyerProducts = async () => {
+    const allProducts = await getProducts();
   
-    let buyerAssets = [];  // Initialize buyerAssets as an empty array
+    let buyerProducts = [];  // Initialize buyerProducts as an empty array
   
-    for (const asset of allAssets) {
-      const buyers = await getBuyer(asset.pId);
+    for (const product of allProducts) {
+      const buyers = await getBuyer(product.pId);
       let buyersMap={
         buyerAddress: address,
         boughtunits: 0
@@ -108,30 +108,30 @@ export const StateContextProvider = ({ children }) => {
         }
       }
       if (buyersMap.boughtunits > 0) {
-        buyerAssets.push({
-          owner: asset.owner,
-          title: asset.title,
-          description: asset.description,
-          priceperunit: asset.priceperunit,
-          quantity: asset.quantity,
+        buyerProducts.push({
+          owner: product.owner,
+          title: product.title,
+          description: product.description,
+          priceperunit: product.priceperunit,
+          quantity: product.quantity,
           available: buyersMap.boughtunits,
-          image: asset.image,
-          pId: asset.pId
+          image: product.image,
+          pId: product.pId
         });
       }
 
     }
   
-    return buyerAssets;
+    return buyerProducts;
   }
 
-  const getAdminAssetsBuy = async (key) => {
-    const allAssets = await getAssets();
+  const getAdminProductsBuy = async (key) => {
+    const allProducts = await getProducts();
   
-    let buyerAssets = [];  // Initialize buyerAssets as an empty array
+    let buyerProducts = [];  // Initialize buyerProducts as an empty array
   
-    for (const asset of allAssets) {
-      const buyers = await getBuyer(asset.pId);
+    for (const product of allProducts) {
+      const buyers = await getBuyer(product.pId);
       let buyersMap={
         buyerAddress: address,
         boughtunits: 0
@@ -142,21 +142,21 @@ export const StateContextProvider = ({ children }) => {
         }
       }
       if (buyersMap.boughtunits > 0) {
-        buyerAssets.push({
-          owner: asset.owner,
-          title: asset.title,
-          description: asset.description,
-          priceperunit: asset.priceperunit,
-          quantity: asset.quantity,
+        buyerProducts.push({
+          owner: product.owner,
+          title: product.title,
+          description: product.description,
+          priceperunit: product.priceperunit,
+          quantity: product.quantity,
           available: buyersMap.boughtunits,
-          image: asset.image,
-          pId: asset.pId
+          image: product.image,
+          pId: product.pId
         });
       }
 
     }
   
-    return buyerAssets;
+    return buyerProducts;
   }
 
 
@@ -166,14 +166,14 @@ export const StateContextProvider = ({ children }) => {
         address,
         contract,
         connect,
-        createAsset: publishAsset,
-        getAssets,
-        getUserAssets,
-        toBuyAsset,
-        getBuyerAssets,
+        createProduct: publishProduct,
+        getProducts,
+        getUserProducts,
+        toBuyProduct,
+        getBuyerProducts,
         getBuyer,
-        getAdminAssetsSell,
-        getAdminAssetsBuy
+        getAdminProductsSell,
+        getAdminProductsBuy
       }}
     >
       {children}

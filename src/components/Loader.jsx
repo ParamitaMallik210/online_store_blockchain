@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { loader } from '../assets';
+import { loader } from '../products';
 
 const Loader = () => {
   return (

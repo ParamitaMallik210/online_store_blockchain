@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
 
 import { useStateContext } from '../context';
-import { money } from '../assets';
+import { money } from '../products';
 import { CustomButton, FormField, Loader } from '../components';
 import { checkIfImage } from '../utils';
 
 const UserInput = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const { createAsset } = useStateContext();
+  const { createProduct } = useStateContext();
   const [form, setForm] = useState({
     address: '',
     adminpassword: '',
@@ -27,9 +27,9 @@ const UserInput = () => {
 
   if (form.adminpassword === 'adminpass' && form.address === '0x9E89b95bf4E965Aa9295967f8442701661eEBF10') {
     setIsLoading(true);
-    // await createAsset({ ...form, priceperunit: ethers.utils.parseUnits(form.priceperunit, 18)})
+    // await createProduct({ ...form, priceperunit: ethers.utils.parseUnits(form.priceperunit, 18)})
     setIsLoading(false);
-    navigate('/create-asset', {
+    navigate('/create-product', {
       state: { address: form.address },  // Pass address as state to the next route
     });
   } else {
@@ -67,8 +67,8 @@ const UserInput = () => {
 
 {/*        
          <FormField 
-            labelName="Asset image *"
-            placeholder="Place image URL of your asset"
+            labelName="Product image *"
+            placeholder="Place image URL of your product"
             inputType="url"
             value={form.image}
             handleChange={(e) => handleFormFieldChange('image', e)}

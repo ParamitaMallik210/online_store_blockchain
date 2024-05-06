@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
-import { DisplayProducts } from '../components';
+import { DisplayProductsBuy } from '../components';
 import { useStateContext } from '../context'
 
-const Home = () => {
+const BoughtProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
 
-  const { address, contract, getProducts } = useStateContext();
+  const { address, contract, getBuyerProducts } = useStateContext();
 
   const fetchProducts = async () => {
     setIsLoading(true);
-    const data = await getProducts();
+    const data = await getBuyerProducts();
     setProducts(data);
     setIsLoading(false);
   }
@@ -21,12 +21,12 @@ const Home = () => {
   }, [address, contract]);
 
   return (
-    <DisplayProducts 
-      title="All Products"
+    <DisplayProductsBuy 
+      title="Bought Products"
       isLoading={isLoading}
       products={products}
     />
   )
 }
 
-export default Home
+export default BoughtProduct

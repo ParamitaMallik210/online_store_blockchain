@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { tagType, thirdweb } from '../assets';
+import { tagType, thirdweb } from '../products';
 import { daysLeft } from '../utils';
 
 const FundCardBuy = ({ owner, title, description, priceperunit, quantity, available, image, handleClick }) => {
@@ -12,7 +12,7 @@ const FundCardBuy = ({ owner, title, description, priceperunit, quantity, availa
       <div className="flex flex-col p-4">
         <div className="flex flex-row items-center mb-[18px]">
           <img src={tagType} alt="tag" className="w-[17px] h-[17px] object-contain"/>
-          <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#808191]">Asset</p>
+          <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#808191]">Product</p>
         </div>
 
         <div className="block">

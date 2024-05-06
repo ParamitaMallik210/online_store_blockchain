@@ -5,12 +5,12 @@ import { ethers } from 'ethers';
 import { useStateContext } from '../context';
 import { CountBox, CustomButton, Loader } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
-import { thirdweb } from '../assets';
+import { thirdweb } from '../products';
 
-const AssetDetails = () => {
+const ProductDetails = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
-  const { toBuyAsset, getBuyer, contract, address } = useStateContext();
+  const { toBuyProduct, getBuyer, contract, address } = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState('');
@@ -26,10 +26,10 @@ const AssetDetails = () => {
     if(contract) fetchBuyers();
   }, [contract, address])
 
-  const handletoBuyAsset = async () => {
+  const handletoBuyProduct = async () => {
     setIsLoading(true);
 
-    await toBuyAsset(state.pId, amount); 
+    await toBuyProduct(state.pId, amount); 
 
     navigate('/')
     setIsLoading(false);
@@ -41,7 +41,7 @@ const AssetDetails = () => {
 
       <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
         <div className="flex-1 flex-col">
-          <img src={state.image} alt="asset" className="w-full h-[410px] object-cover rounded-xl"/>
+          <img src={state.image} alt="product" className="w-full h-[410px] object-cover rounded-xl"/>
           {/* <div className="relative w-full h-[5px] bg-[#3a3a43] mt-2">
             <div className="absolute h-full bg-[#4acd8d]" style={{ width: `${calculateBarPercentage(state.priceperunit, state.available)}%`, maxWidth: '100%'}}>
             </div>
@@ -58,7 +58,7 @@ const AssetDetails = () => {
       <div className="mt-[60px] flex lg:flex-row flex-col gap-5">
         <div className="flex-[2] flex flex-col gap-[40px]">
           <div>
-            <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Creator</h4>
+            <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Owner</h4>
 
             <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
               <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#2c2f32] cursor-pointer">
@@ -117,9 +117,9 @@ const AssetDetails = () => {
 <div className="mt-4">
   <CustomButton 
     btnType="button"
-    title="Buy Asset"
+    title="Buy Product"
     styles="w-full bg-[#8c6dfd]"
-    handleClick={handletoBuyAsset}
+    handleClick={handletoBuyProduct}
   />
 </div>
 
@@ -130,4 +130,4 @@ const AssetDetails = () => {
   )
 }
 
-export default AssetDetails
+export default ProductDetails

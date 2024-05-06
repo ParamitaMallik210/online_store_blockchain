@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react'
 
-import { DisplayAssets } from '../components';
+import { DisplayProducts } from '../components';
 import { useStateContext } from '../context'
 
 const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [assets, setAssets] = useState([]);
+  const [products, setProducts] = useState([]);
 
-  const { address, contract, getUserAssets } = useStateContext();
+  const { address, contract, getUserProducts } = useStateContext();
 
-  const fetchAssets = async () => {
+  const fetchProducts = async () => {
     setIsLoading(true);
-    const data = await getUserAssets();
-    setAssets(data);
+    const data = await getUserProducts();
+    setProducts(data);
     setIsLoading(false);
   }
 
   useEffect(() => {
-    if(contract) fetchAssets();
+    if(contract) fetchProducts();
   }, [address, contract]);
 
   return (
-    <DisplayAssets 
-      title="All Assets"
+    <DisplayProducts 
+      title="All Products"
       isLoading={isLoading}
-      assets={assets}
+      products={products}
     />
   )
 }
