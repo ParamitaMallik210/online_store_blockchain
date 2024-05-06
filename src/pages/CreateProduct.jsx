@@ -1,28 +1,31 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ethers } from 'ethers';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ethers } from "ethers";
 
-import { useStateContext } from '../context';
-import { CustomButton, FormField, Loader } from '../components';
-import { checkIfImage } from '../utils';
+import { useStateContext } from "../context";
+import { CustomButton, FormField, Loader } from "../components";
+import { checkIfImage } from "../utils";
 
 const CreateProduct = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { createProduct } = useStateContext();
   const [form, setForm] = useState({
-    name: '',
-    title: '',
-    description: '',
-    priceperunit: '', 
+    name: "",
+    title: "",
+    description: "",
+    priceperunit: "",
     quantity: 0,
-    image: ''
+    image: "",
   });
 
   const handleFormFieldChange = (fieldName, e) => {
     let value = e.target.value;
 
-    if ((fieldName === "quantity" || fieldName === "priceperunit") && value < 0) {
+    if (
+      (fieldName === "quantity" || fieldName === "priceperunit") &&
+      value < 0
+    ) {
       value = 0;
     }
 
@@ -35,71 +38,85 @@ const CreateProduct = () => {
     checkIfImage(form.image, async (exists) => {
       if (exists) {
         setIsLoading(true);
-        await createProduct({ ...form, priceperunit: ethers.utils.parseUnits(form.priceperunit, 18) });
+        await createProduct({
+          ...form,
+          priceperunit: ethers.utils.parseUnits(form.priceperunit, 18),
+        });
         setIsLoading(false);
-        navigate('/');
+        navigate("/");
       } else {
-        alert('Provide a valid image URL');
-        setForm({ ...form, image: '' });
+        alert("Provide a valid image URL");
+        setForm({ ...form, image: "" });
       }
     });
   };
 
   return (
-    <div className="bg-[#1c1c24] flex justify-center items-center flex-col rounded-[10px] sm:p-10 p-4">
+    <div className="bg-[#003049] flex justify-center items-center flex-col rounded-[10px] sm:p-10 p-4">
       {isLoading && <Loader />}
       <div className="flex justify-center items-center p-[16px] sm:min-w-[380px] bg-[#3a3a43] rounded-[10px]">
-        <h1 className="font-epilogue font-bold sm:text-[25px] text-[18px] leading-[38px] text-white">Product Details</h1>
+        <h1 className="font-epilogue font-bold sm:text-[25px] text-[18px] leading-[38px] text-white">
+          Product Details
+        </h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="w-full mt-[65px] flex flex-col gap-[30px]">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full mt-[65px] flex flex-col gap-[30px]"
+      >
         <div className="flex flex-wrap gap-[40px]">
-          
-          <FormField 
+          <FormField
+            labelName="Your Name *"
+            placeholder="John Doe"
+            inputType="text"
+            value={form.name}
+            handleChange={(e) => handleFormFieldChange("name", e)}
+          />
+          <FormField
             labelName="Product Title *"
             placeholder="Write a title"
             inputType="text"
             value={form.title}
-            handleChange={(e) => handleFormFieldChange('title', e)}
+            handleChange={(e) => handleFormFieldChange("title", e)}
           />
         </div>
 
-        <FormField 
+        <FormField
           labelName="Description *"
           placeholder="Write a Brief description"
           isTextArea
           value={form.description}
-          handleChange={(e) => handleFormFieldChange('description', e)}
+          handleChange={(e) => handleFormFieldChange("description", e)}
         />
 
         <div className="flex flex-wrap gap-[40px]">
-          <FormField 
+          <FormField
             labelName="Price Per Unit*"
             placeholder="ETH 0.50"
             inputType="text"
             value={form.priceperunit}
-            handleChange={(e) => handleFormFieldChange('priceperunit', e)}
+            handleChange={(e) => handleFormFieldChange("priceperunit", e)}
           />
-          <FormField 
+          <FormField
             labelName="Quantity *"
             placeholder="10"
             inputType="number"
             value={form.quantity}
             min="0"
-            handleChange={(e) => handleFormFieldChange('quantity', e)}
+            handleChange={(e) => handleFormFieldChange("quantity", e)}
           />
         </div>
 
-        <FormField 
+        <FormField
           labelName="Product image *"
           placeholder="Place image URL of your product"
           inputType="url"
           value={form.image}
-          handleChange={(e) => handleFormFieldChange('image', e)}
+          handleChange={(e) => handleFormFieldChange("image", e)}
         />
-        
+
         <div className="flex justify-center items-center mt-[40px]">
-          <CustomButton 
+          <CustomButton
             btnType="submit"
             title="Submit new product"
             styles="bg-[#1dc071]"
